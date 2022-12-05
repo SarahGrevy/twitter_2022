@@ -16,6 +16,8 @@ utc=pytz.UTC
 
 CONFIGDIR = join(abspath(dirname(__file__)), 'config')
 
+project_name = "Twitter"
+
 DB_CONFIG_FILE = join(CONFIGDIR, 'config.cfg')
 config = Config('config', CONFIGDIR)
 dba = DbAdapter(config.get_property("POSTGRES", "dialect"),
@@ -26,6 +28,12 @@ dba = DbAdapter(config.get_property("POSTGRES", "dialect"),
                                 config.get_property("POSTGRES", "password"))
 
 # read configs
+
+
+# cached = Tweets().get_cached_data_by_project(dba, "Twitter")
+# cached.extend(Tweets().get_cached_data_by_project(dba, "Twitter"))
+
+
 config = configparser.ConfigParser()
 config.read('config.ini')
 
@@ -51,6 +59,7 @@ endDate =   datetime.datetime(2023, 1, 1, 0, 0, 0)
 startDate= utc.localize(startDate) 
 endDate = utc.localize(endDate) 
 
+
 limit=1000
 for user in df['username']:
     tweets = tweepy.Cursor(api.user_timeline, screen_name=user, count=1000, tweet_mode='extended').items(limit)
@@ -65,7 +74,9 @@ for user in df['username']:
                 "username": user,
                 "tweet": full_text,
                 "date_created": date,
-                "followers_count": followers_count
+                "followers_count": followers_count,
+                'project_name': project_name
+            
 
             }
 
