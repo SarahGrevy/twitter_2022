@@ -1,0 +1,8 @@
+bs4
+lxml==4.7.1
+psutil==5.8.0
+requests==2.27.1
+selenium==4.1.0
+sqlalchemy==1.4.28
+tldextract==3.1.2
+tzlocal==4.1
